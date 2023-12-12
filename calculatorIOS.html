@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Calculator online tip iOS</title>
+        <style>
+            *,
+*::after,
+*::before {
+  padding: 0px;
+  margin: 0px;
+  font-family: inherit;
+}
+
+body {
+  background-color: #333333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+body,
+html {
+  height: 100vh;
+  font-family: sans-serif;
+}
+button {
+  cursor: pointer;
+  border: 0px;
+}
+input[type="text"] {
+  background-color: transparent;
+  text-align: end;
+  width: 100%;
+  color: #d2d2d2;
+  border: 0px;
+  font-size: 4rem;
+}
+#main {
+  border: 2px solid #ededed;
+  border-radius: 50px;
+  width: 100%;
+  max-width: 280px;
+  background-color: #000000;
+  padding: 2rem 1rem;
+}
+.calc_header {
+  margin-top: 90px;
+  padding: 12px;
+}
+
+.calc_footer > * + * {
+  margin-top: 1rem;
+}
+.calc_footer > *:last-child {
+  gap: 1rem;
+}
+.btn_group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  color: #ffffff;
+  font-size: 20px;
+  transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.btn.btn-grow {
+  flex-grow: 1;
+  border-radius: 40px;
+}
+.btn:hover {
+  transform: translate(-2px, -3px);
+}
+.btn.active {
+  background-color: #ffffff;
+  color: #f69906;
+}
+
+.btn-grey {
+  background-color: #9f9f9f;
+  color: #000;
+}
+.btn-grey:hover {
+  background-color: #ededed;
+}
+
+.btn-dark-grey {
+  background-color: #313131;
+}
+.btn-dark-grey:hover {
+  background-color: #999999;
+}
+.btn-orange {
+  background-color: #f69906;
+}
+.btn-orange:hover {
+  background-color: orange;
+}
+
+        </style>  
+    </head>
+    <body>
+        <main id="main">
+            <form id="calc_form">
+              <header class="calc_header">
+                <input
+                  type="text"
+                  disabled
+                  id="output"
+                  class="calc_output"
+                  value="0"
+                />
+              </header>
+              <footer class="calc_footer">
+                <div class="btn_group">
+                  <button
+                    data-type="clear"
+                    type="reset"
+                    value="clear"
+                    class="btn btn-grey"
+                  >
+                    AC
+                  </button>
+                  <button data-type="operator" value="invert" class="btn btn-grey">
+                    +/-
+                  </button>
+                  <button data-type="operator" value="%" class="btn btn-grey">
+                    %
+                  </button>
+                  <button data-type="operator" value="/" class="btn btn-orange">
+                    ÷
+                  </button>
+                </div>
+                <div class="btn_group">
+                  <button
+                    data-type="operand"
+                    value="7"
+                    class="btn btn-dark-grey"
+                    id="7"
+                  >
+                    7
+                  </button>
+                  <button data-type="operand" value="8" class="btn btn-dark-grey">
+                    8
+                  </button>
+                  <button data-type="operand" value="9" class="btn btn-dark-grey">
+                    9
+                  </button>
+                  <button data-type="operator" value="*" class="btn btn-orange">
+                    x
+                  </button>
+                </div>
+                <div class="btn_group">
+                  <button data-type="operand" value="4" class="btn btn-dark-grey">
+                    4
+                  </button>
+                  <button data-type="operand" value="5" class="btn btn-dark-grey">
+                    5
+                  </button>
+                  <button data-type="operand" value="6" class="btn btn-dark-grey">
+                    6
+                  </button>
+                  <button data-type="operator" value="-" class="btn btn-orange">
+                    -
+                  </button>
+                </div>
+                <div class="btn_group">
+                  <button data-type="operand" value="1" class="btn btn-dark-grey">
+                    1
+                  </button>
+                  <button data-type="operand" value="2" class="btn btn-dark-grey">
+                    2
+                  </button>
+                  <button data-type="operand" value="3" class="btn btn-dark-grey">
+                    3
+                  </button>
+                  <button data-type="operator" value="+" class="btn btn-orange">
+                    +
+                  </button>
+                </div>
+                <div class="btn_group">
+                  <button
+                    data-type="operand"
+                    value="0"
+                    class="btn btn-grow btn-dark-grey"
+                  >
+                    0
+                  </button>
+                  <button data-type="operand" value="." class="btn btn-dark-grey">
+                    .
+                  </button>
+                  <button value="=" data-type="operator" class="btn btn-orange">
+                    =
+                  </button>
+                </div>
+              </footer>
+            </form>
+          </main>
+        <script>
+            const output = document.getElementById("output");
+const form = document.getElementById("calc_form");
+const operand_btns = document.querySelectorAll("button[data-type=operand]");
+const operator_btns = document.querySelectorAll("button[data-type=operator]");
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+});
+
+let is_operator = false;
+let equation = [];
+
+const remove_active = () => {
+  operator_btns.forEach((btn) => {
+    btn.classList.remove("active");
+  });
+};
+
+operand_btns.forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    remove_active();
+    if (output.value == "0") {
+      output.value = e.target.value;
+    } else if (output.value.includes(".")) {
+      output.value = output.value + "" + e.target.value.replace(".", "");
+    } else if (is_operator) {
+      is_operator = false;
+      output.value = e.target.value;
+    } else {
+      output.value = output.value + "" + e.target.value;
+    }
+  });
+});
+
+operator_btns.forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    remove_active();
+    e.currentTarget.classList.add("active");
+
+    switch (e.target.value) {
+      case "%":
+        output.value = parseFloat(output.value) / 100;
+        break;
+      case "invert":
+        output.value = parseFloat(output.value) * -1;
+        break;
+      case "=":
+        equation.push(output.value);
+        output.value = eval(equation.join(""));
+        equation = [];
+        break;
+      default:
+        let last_item = equation[equation.length - 1];
+        if (["/", "*", "+", "-"].includes(last_item) && is_operator) {
+          equation.pop();
+          equation.push(e.target.value);
+        } else {
+          equation.push(output.value);
+          equation.push(e.target.value);
+        }
+        is_operator = true;
+        break;
+    }
+  });
+});
+
+        </script>
+    </body>
+</html>

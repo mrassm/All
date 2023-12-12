@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Cart qantity</title>
+    </head>
+    <body>
+        <h1>
+           Cart qantity 
+        </h1>
+
+        <br>
+
+        <button onclick="Show();">
+            Show Qwantity
+        </button>
+
+        <button onclick="Add(1);">
+            Add to Cart       
+        </button>
+
+        <button onclick="Add(2);">
+            +2
+        </button>
+
+        <button onclick="Add(3);">
+            +3
+        </button>
+
+        <button onclick="reset();">
+            Reset Cart
+        </button>
+
+        <br>
+
+        <p id="p">
+
+        </p>
+        <script>
+            let cartQuantity = 0;
+            function Show(){
+                document.getElementById('p').innerHTML = 'Cart qantity:' + cartQuantity;
+            }
+            function Add(num){
+                cartQuantity += num;
+                document.getElementById('p').innerHTML = 'Cart qantity:' + cartQuantity;
+            }
+            function reset (){
+                cartQuantity = 0;
+                document.getElementById('p').innerHTML ='Cart was reset';
+            }
+        </script>
+    </body>
+</html>
